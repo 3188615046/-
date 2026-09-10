@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">课表</string>
+
+    <string name="nav_week">课表</string>
+    <string name="nav_today">今日</string>
+    <string name="nav_settings">设置</string>
+
+    <string name="prev_week">上一周</string>
+    <string name="next_week">下一周</string>
+    <string name="current_week">回到本周</string>
+    <string name="week_format">第%d周</string>
+    <string name="week_with_arrow">第%d周 ▼</string>
+    <string name="update_courses">一键更新课表</string>
+    <string name="updating">正在更新…</string>
+    <string name="update_success">课表更新成功</string>
+    <string name="update_failed">课表更新失败</string>
+    <string name="week_schedule_hint">一屏显示七天课程，上下滑动查看全天</string>
+    <string name="semester_line">%1$s  第%2$s学期</string>
+    <string name="weekday_short_monday">一</string>
+    <string name="weekday_short_tuesday">二</string>
+    <string name="weekday_short_wednesday">三</string>
+    <string name="weekday_short_thursday">四</string>
+    <string name="weekday_short_friday">五</string>
+    <string name="weekday_short_saturday">六</string>
+    <string name="weekday_short_sunday">日</string>
+    <string name="month_label">%d月</string>
+    <string name="date_number">%d</string>
+    <string name="select_week">选择周次</string>
+    <string name="course_detail_edit">编辑</string>
+    <string name="course_detail_close">关闭</string>
+    <string name="course_detail_weeks">%1$s</string>
+    <string name="course_detail_schedule">%1$s  |  %2$s  |  %3$s</string>
+    <string name="course_detail_classroom">教室：%1$s</string>
+    <string name="course_detail_teacher">老师：%1$s</string>
+    <string name="course_detail_no_teacher">老师：未填写</string>
+    <string name="course_detail_no_classroom">教室：未填写</string>
+    <string name="course_detail_editing_soon">编辑功能后续再补，这里先保留交互入口</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_intro">默认只需要账号和密码。一键更新会优先自动识别学年、学期和课表参数。</string>
+    <string name="show_advanced_settings">显示高级参数</string>
+    <string name="hide_advanced_settings">收起高级参数</string>
+    <string name="advanced_settings_hint">自动识别失败时，再手动补充以下字段。</string>
+    <string name="edu_url">教务网址 (默认已内置)</string>
+    <string name="account">账号</string>
+    <string name="password">密码</string>
+    <string name="academic_year">学年 (自动获取，失败时再填)</string>
+    <string name="semester">学期编码 (自动获取，失败时再填)</string>
+    <string name="menu_code">课表菜单码 (自动获取，失败时再填)</string>
+    <string name="semester_start">开学日期 (可选，用于更准确计算周次)</string>
+    <string name="helper_auto_detect">留空时自动获取</string>
+    <string name="helper_semester_start">不填也能用，周次会按学年学期推测</string>
+    <string name="save_settings">保存设置</string>
+    <string name="settings_saved">设置已保存</string>
+    <string name="please_fill_settings">请至少填写账号和密码</string>
+    <string name="import_pyqt_json">导入 PyQt 课表 JSON</string>
+
+    <string name="captcha_title">请输入验证码</string>
+    <string name="captcha_hint">验证码</string>
+    <string name="captcha_confirm">确认</string>
+    <string name="captcha_cancel">取消</string>
+
+    <string name="today_title">今日课程</string>
+    <string name="no_course_today">今天没有课程</string>
+    <string name="period_format">第%1$d-%2$d节</string>
+
+    <string name="empty_hint">暂无数据</string>
+    <string name="loading">加载中…</string>
+    <string name="network_error">网络错误，请检查网络连接</string>
+    <string name="login_failed">登录失败，请检查账号密码</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#4A77C1</color>
+    <color name="primary_dark">#0E1A2D</color>
+    <color name="accent">#FF6D5E</color>
+
+    <color name="background">#0F141C</color>
+    <color name="surface">#171E28</color>
+    <color name="surface_soft">#1D2633</color>
+    <color name="surface_overlay">#202A37</color>
+
+    <color name="grid_line">#243040</color>
+    <color name="header_bg">#171E28</color>
+    <color name="today_highlight">#1B2738</color>
+    <color name="card_text">#F5F7FB</color>
+
+    <color name="text_primary">#F2F5FA</color>
+    <color name="text_secondary">#A6B0C2</color>
+    <color name="text_hint">#7C8698</color>
+    <color name="text_inverse">#FFFFFF</color>
+
+    <color name="success">#69C36D</color>
+    <color name="error">#FF6D5E</color>
+    <color name="warning">#F7B955</color>
+
+    <color name="detail_scrim">#8C0C1118</color>
+    <color name="detail_card">#1C2532</color>
+    <color name="detail_chip">#253141</color>
+</resources>

@@ -1,0 +1,33 @@
+# Local Android/Gradle state
+.gradle/
+.idea/
+.kotlin/
+.java-tmp/
+**/build/
+local.properties
+
+# Signing material and local secrets
+*.jks
+*.keystore
+key.properties
+.env
+.env.*
+!.env.example
+
+# Device data, test captures, and diagnostic output
+backups/
+historical-materials/
+verification/
+test-artifacts/
+captures/
+*.hprof
+*.log
+window_dump*.xml
+kebiao_settings*.xml
+emu-*.png
+web-login-result.png
+
+# Personal screenshots dropped into the project root; public documentation images belong in docs/.
+/*.jpg
+/*.jpeg
+/*.png
