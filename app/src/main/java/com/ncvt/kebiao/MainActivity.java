@@ -1,8 +1,15 @@
 package com.ncvt.kebiao;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -10,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.ncvt.kebiao.data.repository.SettingsRepository;
 import com.ncvt.kebiao.databinding.ActivityMainBinding;
+import com.ncvt.kebiao.model.AppSettings;
+import com.ncvt.kebiao.reminder.CourseReminderScheduler;
 import com.ncvt.kebiao.ui.common.FragmentEventKeys;
 import com.ncvt.kebiao.ui.settings.SettingsFragment;
 import com.ncvt.kebiao.ui.timetable.WeekScheduleFragment;
@@ -20,17 +29,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_TODAY = "today_courses";
     private static final String TAG_SETTINGS = "settings";
     private static final String ACTIVE_TAB = "active_tab";
+    private static final String PERMISSION_PREFS = "notification_permission_state";
+    private static final String KEY_PERMISSION_REQUESTED = "requested";
     private ActivityMainBinding binding;
     private WeekScheduleFragment weekFragment;
     private TodayCoursesFragment todayFragment;
     private SettingsFragment settingsFragment;
     private Fragment activeFragment;
+    private ActivityResultLauncher<String> notificationPermissionLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(new SettingsRepository(this).getSettings().nightModeEnabled
                 ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
+        notificationPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(), granted -> {});
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         applySystemBarInsets();
@@ -62,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Fragment results have one listener per key; broadcast refreshes from the activity.
         manager.setFragmentResultListener(FragmentEventKeys.SETTINGS_CHANGED, this,
-                (key, result) -> refreshPages());
+                (key, result) -> refreshPagesAndReminders());
         manager.setFragmentResultListener(FragmentEventKeys.COURSES_UPDATED, this,
-                (key, result) -> refreshPages());
+                (key, result) -> refreshPagesAndReminders());
+
+        maybeRequestNotificationPermission(new SettingsRepository(this).getSettings());
     }
 
     private Fragment fragmentForItem(int itemId) {
@@ -83,6 +99,22 @@ public class MainActivity extends AppCompatActivity {
         weekFragment.refreshData();
         todayFragment.refreshData();
         settingsFragment.refreshData();
+    }
+
+    private void refreshPagesAndReminders() {
+        refreshPages();
+        CourseReminderScheduler.syncAsync(this);
+    }
+
+    private void maybeRequestNotificationPermission(AppSettings settings) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU || !settings.courseReminderEnabled
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) return;
+        if (getSharedPreferences(PERMISSION_PREFS, Context.MODE_PRIVATE)
+                .getBoolean(KEY_PERMISSION_REQUESTED, false)) return;
+        getSharedPreferences(PERMISSION_PREFS, Context.MODE_PRIVATE).edit()
+                .putBoolean(KEY_PERMISSION_REQUESTED, true).apply();
+        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
     }
 
     private void applySystemBarInsets() {

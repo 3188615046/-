@@ -17,6 +17,7 @@ public class ModelCompatibilityTest {
         builder.nightModeEnabled = true;
         builder.deepCourseCardEnabled = true;
         builder.showNonCurrentWeekCourses = false;
+        builder.courseReminderEnabled = false;
         AppSettings original = builder.build();
         AppSettings.Builder updated = original.toBuilder();
         updated.academicYear = "2026";
@@ -26,6 +27,7 @@ public class ModelCompatibilityTest {
         assertTrue(settings.nightModeEnabled);
         assertTrue(settings.deepCourseCardEnabled);
         assertFalse(settings.showNonCurrentWeekCourses);
+        assertFalse(settings.courseReminderEnabled);
         assertEquals("demo", settings.account);
         assertEquals("", original.academicYear);
     }
@@ -46,6 +48,7 @@ public class ModelCompatibilityTest {
     public void changedCourseDetailsInvalidateAdapterContent() {
         assertNotEquals(course("A101"), course("B201"));
         assertEquals("第1-2节", CourseDisplayUtils.periodLabel(course("A101")));
+        assertEquals("08:00-09:30", CourseDisplayUtils.timeRangeLabel(course("A101")));
         assertEquals("周一", CourseDisplayUtils.dayOfWeekLabel(1));
         assertEquals("2", CourseDisplayUtils.semesterDisplay("12"));
     }

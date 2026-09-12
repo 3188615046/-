@@ -23,6 +23,7 @@ public final class SettingsRepository {
         builder.showNonCurrentWeekCourses = prefs.getBoolean("show_non_current_week", true);
         builder.nightModeEnabled = prefs.getBoolean("night_mode", false);
         builder.deepCourseCardEnabled = prefs.getBoolean("deep_course_card", false);
+        builder.courseReminderEnabled = prefs.getBoolean("course_reminder", true);
         return builder.build();
     }
 
@@ -38,6 +39,7 @@ public final class SettingsRepository {
                 .putBoolean("show_non_current_week", settings.showNonCurrentWeekCourses)
                 .putBoolean("night_mode", settings.nightModeEnabled)
                 .putBoolean("deep_course_card", settings.deepCourseCardEnabled)
+                .putBoolean("course_reminder", settings.courseReminderEnabled)
                 .apply();
     }
 }

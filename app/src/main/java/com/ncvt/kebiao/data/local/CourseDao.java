@@ -24,6 +24,9 @@ public interface CourseDao {
     @Query("SELECT * FROM courses")
     List<CourseEntity> getAll();
 
+    @Query("SELECT * FROM courses WHERE id = :id LIMIT 1")
+    CourseEntity getById(long id);
+
     @Transaction
     default void replaceBySemester(String year, String sem, List<CourseEntity> courses) {
         deleteBySemester(year, sem);

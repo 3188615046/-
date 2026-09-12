@@ -80,6 +80,23 @@
             android:textAllCaps="false"
             style="@style/Widget.Material3.Button.OutlinedButton" />
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_course_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:checked="true"
+            android:text="@string/course_reminder" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-12dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/course_reminder_summary"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
         <LinearLayout
             android:id="@+id/layout_advanced"
             android:layout_width="match_parent"

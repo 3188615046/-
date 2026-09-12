@@ -1,6 +1,9 @@
 package com.ncvt.kebiao.ui.settings;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +29,8 @@ public class SettingsFragment extends Fragment {
     private AppSettings currentSettings = new AppSettings();
     private final ActivityResultLauncher<String[]> jsonPicker = registerForActivityResult(
             new ActivityResultContracts.OpenDocument(), this::importJson);
+    private final ActivityResultLauncher<String> notificationPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), granted -> {});
 
     private void importJson(Uri uri) {
         if (uri != null) {
@@ -68,6 +74,9 @@ public class SettingsFragment extends Fragment {
         binding.btnImportJson.setOnClickListener(v -> jsonPicker.launch(
                 new String[]{"application/json", "text/plain", "*/*"}));
         binding.btnSave.setOnClickListener(v -> viewModel.saveSettings(collectFormData()));
+        binding.switchCourseReminder.setOnCheckedChangeListener((button, checked) -> {
+            if (checked && button.isPressed()) requestNotificationPermission();
+        });
     }
 
     public void refreshData() {
@@ -83,6 +92,7 @@ public class SettingsFragment extends Fragment {
         binding.etSemester.setText(settings.semester);
         binding.etMenuCode.setText(settings.menuCode);
         binding.etSemesterStart.setText(settings.semesterStartDate);
+        binding.switchCourseReminder.setChecked(settings.courseReminderEnabled);
         setAdvancedVisible(!settings.eduUrl.equals(AppSettings.DEFAULT_EDU_URL)
                 || !settings.academicYear.isEmpty() || !settings.semester.isEmpty()
                 || !settings.menuCode.isEmpty() || !settings.semesterStartDate.isEmpty());
@@ -98,7 +108,16 @@ public class SettingsFragment extends Fragment {
         builder.semester = binding.etSemester.getText().toString().trim();
         builder.menuCode = binding.etMenuCode.getText().toString().trim();
         builder.semesterStartDate = binding.etSemesterStart.getText().toString().trim();
+        builder.courseReminderEnabled = binding.switchCourseReminder.isChecked();
         return builder.build();
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 
     private void setAdvancedVisible(boolean visible) {

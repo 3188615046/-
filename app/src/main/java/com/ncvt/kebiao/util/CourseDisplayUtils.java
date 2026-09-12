@@ -1,13 +1,16 @@
 package com.ncvt.kebiao.util;
 
 import com.ncvt.kebiao.model.Course;
+import java.time.LocalTime;
 
 public final class CourseDisplayUtils {
-    private static final String[] PERIOD_TIMES = {
-            "08:00", "08:40", "08:50", "09:30", "09:40", "10:20",
-            "10:30", "11:10", "11:20", "12:00", "14:40", "15:20",
-            "15:30", "16:10", "16:20", "17:00", "19:00", "19:40",
-            "19:50", "20:30", "20:40", "21:20", "21:30", "22:10"
+    private static final String[] PERIOD_START_TIMES = {
+            "08:00", "08:50", "09:40", "10:30", "11:20", "14:40",
+            "15:30", "16:20", "19:00", "19:50", "20:40", "21:30"
+    };
+    private static final String[] PERIOD_END_TIMES = {
+            "08:40", "09:30", "10:20", "11:10", "12:00", "15:20",
+            "16:10", "17:00", "19:40", "20:30", "21:20", "22:10"
     };
     private static final String[] DAYS = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
@@ -32,10 +35,21 @@ public final class CourseDisplayUtils {
 
     public static String timeRangeLabel(Course course) {
         int end = course.startPeriod + course.duration - 1;
-        return timeAt(course.startPeriod) + "-" + timeAt(end < PERIOD_TIMES.length ? end + 1 : end);
+        return startTimeLabel(course.startPeriod) + "-" + endTimeLabel(end);
     }
 
-    private static String timeAt(int period) {
-        return period >= 1 && period <= PERIOD_TIMES.length ? PERIOD_TIMES[period - 1] : "--:--";
+    public static LocalTime startTime(int period) {
+        return period >= 1 && period <= PERIOD_START_TIMES.length
+                ? LocalTime.parse(PERIOD_START_TIMES[period - 1]) : null;
+    }
+
+    public static String startTimeLabel(int period) {
+        return period >= 1 && period <= PERIOD_START_TIMES.length
+                ? PERIOD_START_TIMES[period - 1] : "--:--";
+    }
+
+    private static String endTimeLabel(int period) {
+        return period >= 1 && period <= PERIOD_END_TIMES.length
+                ? PERIOD_END_TIMES[period - 1] : "--:--";
     }
 }

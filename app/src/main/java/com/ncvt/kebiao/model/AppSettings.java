@@ -14,6 +14,7 @@ public final class AppSettings {
     public final boolean showNonCurrentWeekCourses;
     public final boolean nightModeEnabled;
     public final boolean deepCourseCardEnabled;
+    public final boolean courseReminderEnabled;
 
     public AppSettings() {
         this(new Builder());
@@ -30,6 +31,7 @@ public final class AppSettings {
         showNonCurrentWeekCourses = builder.showNonCurrentWeekCourses;
         nightModeEnabled = builder.nightModeEnabled;
         deepCourseCardEnabled = builder.deepCourseCardEnabled;
+        courseReminderEnabled = builder.courseReminderEnabled;
     }
 
     public boolean isValid() {
@@ -52,6 +54,7 @@ public final class AppSettings {
         public boolean showNonCurrentWeekCourses = true;
         public boolean nightModeEnabled;
         public boolean deepCourseCardEnabled;
+        public boolean courseReminderEnabled = true;
 
         public Builder() {}
 
@@ -66,6 +69,7 @@ public final class AppSettings {
             showNonCurrentWeekCourses = settings.showNonCurrentWeekCourses;
             nightModeEnabled = settings.nightModeEnabled;
             deepCourseCardEnabled = settings.deepCourseCardEnabled;
+            courseReminderEnabled = settings.courseReminderEnabled;
         }
 
         public AppSettings build() {

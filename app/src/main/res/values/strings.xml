@@ -6,6 +6,12 @@
     <string name="nav_today">今日</string>
     <string name="nav_settings">设置</string>
 
+    <string name="course_reminder">上课提醒</string>
+    <string name="course_reminder_summary">每节课开始前 30 分钟发送通知</string>
+    <string name="course_reminder_channel">上课提醒</string>
+    <string name="course_reminder_channel_description">课程开始前 30 分钟提醒</string>
+    <string name="course_reminder_title">%1$s 还有 30 分钟上课</string>
+
     <string name="prev_week">上一周</string>
     <string name="next_week">下一周</string>
     <string name="current_week">回到本周</string>
